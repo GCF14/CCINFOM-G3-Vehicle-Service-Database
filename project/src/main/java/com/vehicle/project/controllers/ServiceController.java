@@ -1,28 +1,22 @@
 package com.vehicle.project.controllers;
 
-import com.vehicle.project.model.VehicleService; // Import the VehicleService model
-import com.vehicle.project.services.ServiceService; // Import the ServiceService
+import com.vehicle.project.model.Service;
+import com.vehicle.project.repository.ServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@RestController // Indicates that this class is a REST controller
-@RequestMapping("/api/services") // Base URL for all methods in this controller
+@RestController
 public class ServiceController {
 
-    @Autowired // Automatically injects the ServiceService bean
-    private ServiceService serviceService;
+    @Autowired
+    private ServiceRepository serviceRepository;
 
-    @GetMapping // Handles GET requests to /api/services
-    public List<VehicleService> getAllServices() {
-        return serviceService.getAllServices(); // Calls the service to fetch all services
+    @GetMapping("/api/services")
+    public List<Service> getAllServices() {
+        return serviceRepository.findAll();
     }
 
-    @GetMapping("/test")
-    public String testEndpoint() {
-        return "Test endpoint is working!";
-    }
 }
