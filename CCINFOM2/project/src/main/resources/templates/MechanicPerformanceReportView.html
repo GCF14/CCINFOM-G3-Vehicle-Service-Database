@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Mechanic Performance Report</title>
+</head>
+<body>
+    <h1>Performance Report for [[${yearMonth}]]</h1>
+    
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Mechanic ID</th>
+                <th>Mechanic Last Name</th>
+                <th>Mechanic First Name</th>
+                <th>Total Cars Serviced</th>
+                <th>Total Service Cost</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="row : ${reportData}">
+                <td th:text="${row['mechanic_id']}"></td>
+                <td th:text="${row['mechanic_last_name']}"></td>
+                <td th:text="${row['mechanic_first_name']}"></td>
+                <td th:text="${row['total_cars_serviced']}"></td>
+                <td th:text="${row['total_service_cost']}"></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="/">Back</a>
+</body>
+</html>
