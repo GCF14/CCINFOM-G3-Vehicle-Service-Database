@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
     <nav class="main-header">
@@ -312,13 +312,40 @@
     <section>
         <h4>Generate Reports</h4>
         <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action flex-column align-items-start hover-active">
-              <div class="d-flex w-100 justify-content-between">
+            <button data-bs-toggle="modal" data-bs-target="#MechPerfModal" class="list-group-item list-group-item-action flex-column align-items-start hover-active">
+                <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Mechanics Performance Report</h5>
               </div>
               <p class="mb-1">Report regarding the total cars serviced of Mechanics and total service cost done
                 per year and month.</p>
-            </a>
+              </button>
+
+              <div class="fade modal" id="MechPerfModal">
+                <div class="modal-dialog modal-sm">
+                  <div class="modal-content">
+              
+                    <div class="modal-header">
+                      <h4 class="modal-title">Choose what month and year</h4>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+              
+                    <form method="GET" action="/view-mechperfreport">
+                    <div class="modal-body">
+                    <input class="form-control" type="month" id="year-month" name="year-month" placeholder="Select Hire Date">
+                    </div>
+                    
+            
+                    <div class="modal-footer">
+                      
+                      <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                      <button type="submit" class="btn btn-outline-primary">Submit</button>
+             
+                    </div>
+                  </form>
+                  </div>
+                </div>
+              </div>
+              
             <a href="#" class="list-group-item list-group-item-action flex-column align-items-start hover-active">
               <div class="d-flex w-100 justify-content-between">
                 <h5 class="mb-1">Customer Frequency Report</h5>
@@ -341,6 +368,32 @@
                     for a given year and month </p>
               </a>
           </div>
+
+          <div class="modal fade" id="generateReportModal" tabindex="-1" aria-labelledby="generateReportLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+              <div class="modal-content">
+                <form action="/generate-report" method="POST">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="generateReportLabel">Generate Report</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                  <div class="modal-body">
+                    <div class="mb-3">
+                      <label for="yearInput" class="form-label">Year</label>
+                      <input type="number" class="form-control" id="yearInput" name="year" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="monthInput" class="form-label">Month</label>
+                      <input type="number" class="form-control" id="monthInput" name="month" required>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Generate Report</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
           
           
 
@@ -350,6 +403,11 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script src="js/script.js"></script> 
+    <script>
+      flatpickr("input[type=date]", {})
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
 
     
 
