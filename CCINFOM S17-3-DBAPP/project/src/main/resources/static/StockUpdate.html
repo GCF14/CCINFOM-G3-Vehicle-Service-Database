@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Stock Form</title>
+    <link rel="stylesheet" href="../style2.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+</head>
+<body>
+
+    <div class="container mt-5">
+        <h2>Update Stock Form</h2>
+        <form method="POST" action="/stock-update">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="name" class="form-label">Enter Name of Item</label>
+                    <input type="text" name="name" class="form-control" id="name" maxlength="30" placeholder="Enter Name of Item">
+                </div>
+                <div class="col-md-6">
+                    <label for="price" class="form-label">Enter New Price</label>
+                    <input type="text" name="price" class="form-control" id="price" maxlength="30" placeholder="Enter New Price">
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="manufacturingDate" class="form-label">Enter Manufactured Date</label>
+                <input class="form-control" type="date" name="manufacturingDate" class="form-control" placeholder="Enter Manufactured Date" required>
+            </div>
+
+            <div class="row mb-3">
+                <label for="warranty" class="form-label">Enter Warranty Date</label>
+                <input class="form-control" type="date" name="warranty" class="form-control" placeholder="Enter Warranty Date" required>
+            </div>
+
+            <div class="text-center">
+                <button type="button" class="btn btn-secondary" onclick="window.location.href='/'">Back</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    
+</body>
+</html>

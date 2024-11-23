@@ -92,7 +92,7 @@ CREATE TABLE Service_history_table (
     date_start					DATE,
     date_end					DATE,
     total_cost					DECIMAL(12, 2),
-    service_rating				INT(2),
+    service_rating				INT,
     
     
 	CONSTRAINT SERVICE_HISTORY_PK PRIMARY KEY(service_history_id),
@@ -143,12 +143,11 @@ CREATE TABLE Stock_usage_table (
 
 INSERT INTO Stock_usage_table (stock_usage_id, service_history_id, stock_id, quantity)
 VALUES
-(1, 1, NULL, 0),
+(1, 1, 1, 1),
 (2, 2, 2, 1),
 (3, 3, 3, 1),
 (4, 4, 1, 4),
-(5, 5, 5, 1),
-(6, 1, 1, 1);
+(5, 5, 5, 1);
 
 
 SELECT * 
@@ -166,7 +165,7 @@ FROM Stock_table;
 SELECT * 
 FROM Stock_usage_table;
 
-SELECT COUNT(*) FROM Service_history_table WHERE mechanic_id = ?;
+SELECT COUNT(*) FROM Stock_usage_table WHERE service_id = 1;
 
 DELETE FROM Service_history_table WHERE mechanic_id = 6;
 
@@ -272,4 +271,4 @@ JOIN Mechanic_table m ON sh.mechanic_id = m.mechanic_id;
 
 SELECT * FROM service_history_delete;
 
-SELECT COUNT(*) FROM Stock_usage_table su JOIN Stock_table st ON su.stock_id = st.stock_id WHERE su.stock_id = 6;
+

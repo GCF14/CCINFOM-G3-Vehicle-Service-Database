@@ -72,7 +72,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 const tableSelect = document.getElementById("tableSelect2");
-const dependentDropdownContainer = document.getElementById("dependentDropdownContainer");
+const dependentDropdownContainer = document.getElementById("dependentDropdownContainer2");
 const dependentSelect = document.getElementById("recordSelect2");
 const deleteButton = document.getElementById("deleteButton");
 
@@ -138,8 +138,63 @@ deleteButton.addEventListener("click", async function (event) {
         } catch (error) {
             console.error("Error deleting record:", error);
             alert("An error occurred while deleting the record.");
+            
         }
     } else {
         alert("Please select a valid table and record to delete.");
+    }
+});
+
+
+
+const tableSelectUpdate = document.getElementById("tableSelectUpdate");
+const dependentDropdownContainerUpdate = document.getElementById("dependentDropdownContainerUpdate");
+const dependentSelectUpdate = document.getElementById("recordSelectUpdate");
+
+tableSelectUpdate.addEventListener("change", async function () {
+    const selectedTable = tableSelectUpdate.value;
+
+    if (selectedTable) {
+        try {
+            const response = await fetch(`/api/get-records?tableName=${selectedTable}`);
+            const records = await response.json();
+
+            dependentSelectUpdate.innerHTML = "";
+
+            records.forEach(record => {
+                const option = document.createElement("option");
+                option.textContent = record.details;
+                option.value = record.id;
+                dependentSelectUpdate.appendChild(option);
+            });
+
+            dependentDropdownContainerUpdate.style.display = "block";
+        } catch (error) {
+            console.error("Error fetching records:", error);
+        }
+    } else {
+        dependentDropdownContainerUpdate.style.display = "none";
+    }
+});
+
+
+flatpickr("#yearField", {
+    dateFormat: "Y-m-d", // Allows users to select full date
+    onChange: function(selectedDates) {
+        if (selectedDates.length > 0) {
+            const selectedYear = selectedDates[0].getFullYear(); // Extract the year
+            document.getElementById("yearField").value = selectedYear; // Update the input value to the year
+        }
+    }
+});
+
+// Ensure the form always sends the year
+document.querySelector("form").addEventListener("submit", function(event) {
+    const yearField = document.getElementById("yearField");
+    const selectedDate = new Date(yearField.value);
+
+    // If the value is not already just a year, extract and set it
+    if (!/^\d{4}$/.test(yearField.value) && !isNaN(selectedDate)) {
+        yearField.value = selectedDate.getFullYear();
     }
 });

@@ -25,7 +25,7 @@ public class SubmitController {
         @RequestParam("vehiclebrand") String vehiclebrand,
         @RequestParam("vehiclemodel") String vehiclemodel,
         @RequestParam("year") String manufacturedYear,
-        @RequestParam("date") String date,
+        @RequestParam("currentDate") String date,
         @RequestParam("serviceSelect") String service,
         @RequestParam("mechanicSelect") String mechanic,
         @RequestParam(value = "partSelect", defaultValue = "0") String part,

@@ -11,6 +11,8 @@ import com.vehicle.project.repository.MechanicRepository;
 import com.vehicle.project.exception.ErrorException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 
 
 @Controller
@@ -28,6 +30,7 @@ public class HireMechanicController {
 
 
             Mechanic mechanic = new Mechanic();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
             mechanic.setFirstName(firstName);
             mechanic.setLastName(lastName);
@@ -35,6 +38,13 @@ public class HireMechanicController {
             mechanic.setEndDate(endDate);
 
             try {
+                LocalDate hireDateParsed = LocalDate.parse(hireDate, formatter);
+                LocalDate endDateParsed = LocalDate.parse(endDate, formatter);
+
+                if (hireDateParsed.isAfter(endDateParsed) || hireDateParsed.isEqual(endDateParsed)) {
+                    return "redirect:/error.html?errorMessage=" + URLEncoder.encode("Invalid dates inputted", StandardCharsets.UTF_8);
+                }
+
                 mechanicRepository.hireMechanic(mechanic);
             } catch (ErrorException e){
                 return "redirect:/error.html?errorMessage=" + URLEncoder.encode(e.getMessage(), StandardCharsets.UTF_8);
