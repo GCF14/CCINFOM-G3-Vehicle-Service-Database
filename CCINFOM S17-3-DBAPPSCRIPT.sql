@@ -1,5 +1,6 @@
 USE `dbvehicleservice`;
 
+-- Dropping of tables 
 DROP TABLE IF EXISTS Service_history_table;
 DROP TABLE IF EXISTS Customer_table;
 DROP TABLE IF EXISTS Vehicle_table;
@@ -7,9 +8,21 @@ DROP TABLE IF EXISTS Service_table;
 DROP TABLE IF EXISTS Mechanic_table;
 DROP TABLE IF EXISTS Stock_table;
 DROP TABLE IF EXISTS Stock_usage_table;
+
+
+-- Dropping of views 
 DROP VIEW IF EXISTS service_history_view;
+DROP VIEW IF EXISTS stock_use;
+DROP VIEW IF EXISTS working_mechanics;
+DROP VIEW IF EXISTS customers;
+DROP VIEW IF EXISTS services_with_upgrades;
+DROP VIEW IF EXISTS services;
+DROP VIEW IF EXISTS stocks;
+DROP VIEW IF EXISTS mechanics;
+DROP VIEW IF EXISTS customer_and_vehicle;
 
 
+-- Table Creation and Insertion 
 CREATE TABLE Customer_table (
 	customer_id		INT  AUTO_INCREMENT NOT NULL,
     first_name		VARCHAR(30),
@@ -149,7 +162,7 @@ VALUES
 (4, 4, 1, 4),
 (5, 5, 5, 1);
 
-
+-- Select testing for tables
 SELECT * 
 FROM Vehicle_table;
 SELECT * 
@@ -165,14 +178,8 @@ FROM Stock_table;
 SELECT * 
 FROM Stock_usage_table;
 
-SELECT COUNT(*) FROM Stock_usage_table WHERE service_id = 1;
 
-DELETE FROM Service_history_table WHERE mechanic_id = 6;
-
-SELECT COUNT(*) 
-FROM Customer_table c JOIN Vehicle_table v ON v.customer_id = c.customer_id
-WHERE c.first_name = 'Gerard Christian' AND c.last_name = 'Felipe' AND v.brand = 'Toyota' AND v.model = 'Landcruiser';
-
+-- Views for User and backend
 CREATE VIEW service_history_view AS
 SELECT s.service_type, CONCAT(c.first_name, " ", c.last_name) AS customer_name, v.brand, v.model, CONCAT(m.mechanic_first_name, " ", 
 m.mechanic_last_name) AS mechanic_name, sh.date_start, sh.date_end, sh.total_cost, sh.service_rating
@@ -181,41 +188,31 @@ JOIN Customer_table c ON sh.customer_id = c.customer_id
 JOIN Service_table s ON sh.service_id = s.service_id
 JOIN Mechanic_table m ON sh.mechanic_id = m.mechanic_id;
 
-SELECT * FROM service_history_view ORDER BY total_cost DESC;
 
 CREATE VIEW customer_and_vehicle AS
 SELECT c.last_name, c.first_name, c.contact_details, v.vehicle_id, v.brand, v.model, v.year_made
 FROM Customer_table c JOIN Vehicle_table v ON c.customer_id = v.customer_id
 ORDER BY c.last_name;
 
-DROP VIEW IF EXISTS customer_and_vehicle;
-SELECT * FROM customer_and_vehicle;
+
 
 CREATE VIEW mechanics AS
 SELECT mechanic_last_name, mechanic_first_name, hire_date, end_date
 FROM Mechanic_table
 ORDER BY mechanic_last_name;
 
-DROP VIEW IF EXISTS mechanics;
 
-SELECT * FROM mechanics;
 
 
 CREATE VIEW stocks AS
 SELECT name, price, manufacturing_date, warranty
 FROM Stock_table;
 
-DROP VIEW IF EXISTS stocks;
-
-SELECT * FROM stocks;
 
 CREATE VIEW services AS
 SELECT service_type, base_cost
 FROM Service_table;
 
-DROP VIEW IF EXISTS services;
-
-SELECT * FROM services;
 
 CREATE VIEW services_with_upgrades AS
 SELECT s.service_type, CONCAT(c.first_name, " ", c.last_name) AS customer_name, v.brand, v.model, CONCAT(m.mechanic_first_name, " ", 
@@ -227,18 +224,14 @@ JOIN Mechanic_table m ON sh.mechanic_id = m.mechanic_id
 JOIN Stock_usage_table su ON sh.service_history_id = su.service_history_id
 JOIN Stock_table st ON su.stock_id = st.stock_id;
 
-DROP VIEW IF EXISTS services_with_upgrades;
 
-SELECT * FROM services_with_upgrades;
 
 CREATE VIEW customers AS
 SELECT last_name, first_name, contact_details
 FROM Customer_table
 ORDER BY last_name;
 
-DROP VIEW IF EXISTS customers;
 
-SELECT * FROM customers;
 
 CREATE VIEW working_mechanics AS
 SELECT m.mechanic_last_name, m.mechanic_first_name, v.brand, v.model, s.service_type, sh.date_start, sh.date_end
@@ -247,9 +240,7 @@ JOIN Service_table s ON sh.service_id = s.service_id
 JOIN Vehicle_table v ON sh.vehicle_id = v.vehicle_id
 WHERE sh.date_end IS NULL;
 
-DROP VIEW IF EXISTS working_mechanics;
 
-SELECT * FROM working_mechanics;
 
 CREATE VIEW stock_use AS
 SELECT su.stock_usage_id, sh.service_history_id, s.service_id, s.service_type, st.name, su.quantity 
@@ -257,9 +248,6 @@ FROM Stock_usage_table su JOIN Service_history_table sh ON su.service_history_id
 JOIN Service_table s ON sh.service_id = s.service_id
 JOIN Stock_table st ON su.stock_id = st.stock_id;
 
-DROP VIEW IF EXISTS stock_use;
-
-SELECT * FROM stock_use;
 
 CREATE VIEW service_history_delete AS
 SELECT sh.service_history_id, s.service_type, CONCAT(c.first_name, " ", c.last_name) AS customer_name, v.brand, v.model, CONCAT(m.mechanic_first_name, " ", 
@@ -269,6 +257,16 @@ JOIN Customer_table c ON sh.customer_id = c.customer_id
 JOIN Service_table s ON sh.service_id = s.service_id
 JOIN Mechanic_table m ON sh.mechanic_id = m.mechanic_id;
 
-SELECT * FROM service_history_delete;
 
+-- Select testing for views
+SELECT * FROM service_history_delete;
+SELECT * FROM service_history_view ORDER BY total_cost DESC;
+SELECT * FROM stock_use;
+SELECT * FROM working_mechanics;
+SELECT * FROM customers;
+SELECT * FROM services_with_upgrades;
+SELECT * FROM services;
+SELECT * FROM stocks;
+SELECT * FROM mechanics;
+SELECT * FROM customer_and_vehicle;
 
