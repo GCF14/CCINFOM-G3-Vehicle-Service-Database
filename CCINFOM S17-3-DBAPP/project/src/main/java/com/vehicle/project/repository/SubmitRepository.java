@@ -10,7 +10,7 @@ public class SubmitRepository {
 
     private final JdbcTemplate jdbcTemplate;
 
-    // Constructor to inject JdbcTemplate
+   
     public SubmitRepository(JdbcTemplate jdbcTemplate) {
         this.jdbcTemplate = jdbcTemplate;
     }

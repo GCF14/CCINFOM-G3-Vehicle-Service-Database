@@ -10,13 +10,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import com.vehicle.project.exception.ErrorException;
 
-// Custom exception class for error handling (you can customize this)
-class ErrorException extends RuntimeException {
-    public ErrorException(String message) {
-        super(message);
-    }
-}
+
+
 
 @RestController
 @RequestMapping("/api")
@@ -24,7 +21,7 @@ public class DeleteController {
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
-    private static final Logger logger = LoggerFactory.getLogger(DeleteController.class);  // Logger initialization
+    private static final Logger logger = LoggerFactory.getLogger(DeleteController.class);  
 
     @DeleteMapping("/delete-record")
     public ResponseEntity<String> deleteRecord(@RequestParam String tableName, @RequestParam int id) {
@@ -90,7 +87,7 @@ public class DeleteController {
             throw new ErrorException("Unable to delete record because another record depends on it");
         } catch (Exception e){
            
-            logger.error("An unexpected error occurred during deletion: ", e);  // This will log the exception details
+            logger.error("An unexpected error occurred during deletion: ", e);  
             throw new ErrorException("An unexpected error occurred during deletion");
             
         }

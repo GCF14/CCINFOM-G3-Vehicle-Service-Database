@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Frequency Report</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+    <div class="container my-5">
+        <h1 class="text-center text-primary mb-4">Customer Frequency Report for [[${yearMonth}]]</h1>
+
+        <div class="table-responsive">
+            <table class="table table-bordered table-striped">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Customer ID</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Total Vehicles Serviced</th>
+                        <th>Total Service Cost</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="report : ${reportList}">
+                        <td th:text="${report['customer_id']}"></td>
+                        <td th:text="${report['first_name']}"></td>
+                        <td th:text="${report['last_name']}"></td>
+                        <td th:text="${report['total_vehicles_serviced']}"></td>
+                        <td th:text="${report['total_service_cost']}"></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="d-flex justify-content-center mt-4">
+            <a href="/" class="btn btn-secondary btn-lg me-2" style="width: 100px;">Back</a>
+            <button class="btn btn-primary btn-lg" style="width: 100px;" onclick="window.print()">Print</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
+</body>
+</html>

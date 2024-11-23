@@ -179,22 +179,23 @@ tableSelectUpdate.addEventListener("change", async function () {
 
 
 flatpickr("#yearField", {
-    dateFormat: "Y-m-d", // Allows users to select full date
+    dateFormat: "Y-m-d",
     onChange: function(selectedDates) {
         if (selectedDates.length > 0) {
-            const selectedYear = selectedDates[0].getFullYear(); // Extract the year
-            document.getElementById("yearField").value = selectedYear; // Update the input value to the year
+            const selectedYear = selectedDates[0].getFullYear(); 
+            document.getElementById("yearField").value = selectedYear;
         }
     }
 });
 
-// Ensure the form always sends the year
+
 document.querySelector("form").addEventListener("submit", function(event) {
     const yearField = document.getElementById("yearField");
     const selectedDate = new Date(yearField.value);
-
-    // If the value is not already just a year, extract and set it
+    
     if (!/^\d{4}$/.test(yearField.value) && !isNaN(selectedDate)) {
         yearField.value = selectedDate.getFullYear();
     }
 });
+
+

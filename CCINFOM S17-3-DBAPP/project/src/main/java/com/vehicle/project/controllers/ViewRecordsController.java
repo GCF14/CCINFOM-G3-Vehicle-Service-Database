@@ -10,15 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.vehicle.project.repository.ViewRepository;
-// import com.vehicle.project.mapper.ServicesWithUpgradesRowMapper;
-// import com.vehicle.project.model.Customer;
-// import com.vehicle.project.model.CustomerAndVehicle;
-// import com.vehicle.project.model.Mechanic;
-// import com.vehicle.project.model.WorkingMechanic;
-// import com.vehicle.project.model.Service;
-// import com.vehicle.project.model.ServiceHistoryView;
-// import com.vehicle.project.model.ServiceWithUpgrades;
-// import com.vehicle.project.model.Stock;
+
 
 import org.springframework.ui.Model;
 
@@ -34,7 +26,7 @@ public class ViewRecordsController {
 
         String viewName = "";
         try {
-            List<?> viewData = null;  // Use a generic list to hold the data
+            List<?> viewData = null;  
             if ("service_history_view".equals(viewSelect)) {
                 viewData = viewRepository.findServiceHistoryViews();
                 viewName = "Service History View";
@@ -108,7 +100,8 @@ public class ViewRecordsController {
         } catch (Exception e) {
             e.printStackTrace();
             model.addAttribute("errorMessage", "An error occurred: " + e.getMessage());
-            return "errorPage";  // A separate error page HTML (create one if it doesn't exist)
+            return "redirect:/error.html?errorMessage=" + URLEncoder.encode("Invalid view selected.", StandardCharsets.UTF_8);
+            
         }
     }
 }
